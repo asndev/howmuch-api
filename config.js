@@ -1,7 +1,7 @@
 
 const config = {
-  dbUrl: 'mongodb://localhost/DB_NAME',
-  secret: 'SOME_RANDOM_STRING'
+  dbUrl: 'mongodb://localhost/howmuch',
+  secret: '1kun31gku1kg1knf'
 };
 
 module.exports = config;

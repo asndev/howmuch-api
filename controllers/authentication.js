@@ -1,11 +1,11 @@
 const jwt = require('jwt-simple');
-const config = require('../config');
+const { secret } = require('../config');
 
 const User = require('../models/User');
 
 const generateToken = (user) => {
   const timestamp = new Date().getTime();
-  return jwt.encode({ sub: user.id, iat: timestamp }, config.secret);
+  return jwt.encode({ sub: user.id, iat: timestamp }, secret);
 };
 
 const signup = (req, res, next) => {
@@ -23,10 +23,7 @@ const signup = (req, res, next) => {
       return res.status(422).send({ error: '`email` already registered.' });
     }
 
-    const user = new User({
-      email,
-      password
-    });
+    const user = new User({ email, password });
 
     user.save((err) => {
       if (err) { return next(err); }
@@ -36,6 +33,8 @@ const signup = (req, res, next) => {
 };
 
 const signin = (req, res, next) => {
+  if (!req.user) { res.status(422).send({ error: 'No user available' }); }
+  // user was extracted via signin middleware
   res.send({ token: generateToken(req.user) });
 };
 

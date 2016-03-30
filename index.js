@@ -17,7 +17,7 @@ mongoose.connect(config.dbUrl);
 app.use(morgan('combined'));
 // Parse everything as json, no matter the request type
 app.use(bodyParser.json({ type: '*/*' }));
-
+// inject routes into app
 router(app);
 
 // Server
