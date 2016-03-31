@@ -1,3 +1,5 @@
+https://travis-ci.org/hknd/howmuch-api.svg?branch=master
+
 # WIP
 
 ```
