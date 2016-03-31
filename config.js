@@ -1,7 +1,12 @@
 
 const config = {
-  dbUrl: 'mongodb://localhost/howmuch',
-  secret: '1kun31gku1kg1knf'
+  secret: '1kun31gku1kg1knf',
+  dev: {
+    dbUrl: 'mongodb://localhost/howmuch'
+  },
+  test: {
+    dbUrl: 'mongodb://localhost/howmuch-test'
+  }
 };
 
 module.exports = config;
