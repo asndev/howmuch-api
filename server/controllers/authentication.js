@@ -1,5 +1,5 @@
 const jwt = require('jwt-simple');
-const { secret } = require('../config');
+const { secret } = require('../../config');
 
 const User = require('../models/User');
 

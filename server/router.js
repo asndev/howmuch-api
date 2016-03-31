@@ -12,7 +12,7 @@ const requireSignin = passport.authenticate('local', { session: false });
 const router = (app) => {
   // dummy router, to be deleted
   app.get('/', requireAuth, (req, res) => {
-    res.send({ secret: 'Foobar!' });
+    res.send({ success: true });
   });
 
   // signin middleware transforms email+password into user
@@ -22,6 +22,21 @@ const router = (app) => {
   // signup passes email+password to controller
   // and returns token
   app.post('/signup', AuthenticationCtrl.signup);
+
+  // Handle 404
+  app.use((req, res, next) => {
+    res.status(404).json({
+      success: false,
+      message: 'Resource not found'
+    });
+  });
+
+  app.use((err, req, res, next) => {
+    res.status(500).json({
+      success: false,
+      message: 'Something went terribly wrong'
+    });
+  });
 }
 
 module.exports = router;

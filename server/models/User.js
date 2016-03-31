@@ -23,7 +23,6 @@ schema.pre('save', function(next) {
 });
 
 schema.methods.checkPassword = function(givenPassword, callback) {
-  console.log("Comparing password: ", givenPassword, this.password);
   // compare the given password with the hashed password
   bcrypt.compare(givenPassword, this.password, (err, isMatch) => {
     if (err) { return callback(err); }
