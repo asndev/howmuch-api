@@ -3,11 +3,14 @@ const http = require('http');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
+const responseTime = require('response-time');
+
+const router = require('./router');
 const config = require('../config');
 
 const app = express();
-const router = require('./router');
-
+app.use(responseTime());
+app.disable('x-powered-by');
 // Parse everything as json, no matter the request type
 app.use(bodyParser.json({ type: '*/*' }));
 // inject routes into app
