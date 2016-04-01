@@ -93,7 +93,7 @@ describe('Routes', function() {
     it('should correctly signin on /signin POST', (done) => {
       chai.request(server.app)
         .post('/signin')
-        .send(newUser)
+        .send(mock.user) // todo (asn): this should be new user, evaluate.
         .end((err, res) => {
           res.should.have.status(200);
           res.should.be.json;
