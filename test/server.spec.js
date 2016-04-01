@@ -58,27 +58,14 @@ describe('Routes', function() {
       });
   });
 
-  it('should correctly signin on /signin POST', (done) => {
-    chai.request(server.app)
-      .post('/signin')
-      .send(mock.user)
-      .end((err, res) => {
-        res.should.have.status(200);
-        res.should.be.json;
-        res.body.should.be.an('object');
-        res.body.should.have.property('token');
-        res.body.token.should.be.a('string');
-        done();
-      });
-  });
-
   describe('Signup Process', () => {
     let token;
-
+    let newUser = { email: 'new@user.com', password: 'newpassword' };
+    
     it('should correctly signup on /signup POST', (done) => {
       chai.request(server.app)
         .post('/signup')
-        .send({ email: 'new@user.com', password: 'newpassword' })
+        .send(newUser)
         .end((err, res) => {
           res.should.have.status(200);
           res.should.be.json;
@@ -99,6 +86,20 @@ describe('Routes', function() {
           res.should.be.json;
           res.body.should.have.property('success');
           res.body.success.should.be.true;
+          done();
+        });
+    });
+    
+    it('should correctly signin on /signin POST', (done) => {
+      chai.request(server.app)
+        .post('/signin')
+        .send(newUser)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.should.be.json;
+          res.body.should.be.an('object');
+          res.body.should.have.property('token');
+          res.body.token.should.be.a('string');
           done();
         });
     });
