@@ -5,6 +5,8 @@ const Schema = mongoose.Schema;
 const schema = new Schema({
   email: { type: String, lowercase: true, unique: true },
   password: { type: String, min: 5 }
+}, {
+  strict: 'throw'
 });
 
 schema.pre('save', function(next) {

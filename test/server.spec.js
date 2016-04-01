@@ -30,7 +30,8 @@ describe('Routes', function() {
     });
   });
 
-  afterEach((done) => {
+  // We only drop the users collection after all tests!
+  after((done) => {
     User.collection.drop();
     done();
   });
@@ -61,7 +62,7 @@ describe('Routes', function() {
   describe('Signup Process', () => {
     let token;
     let newUser = { email: 'new@user.com', password: 'newpassword' };
-    
+
     it('should correctly signup on /signup POST', (done) => {
       chai.request(server.app)
         .post('/signup')
@@ -89,11 +90,11 @@ describe('Routes', function() {
           done();
         });
     });
-    
+
     it('should correctly signin on /signin POST', (done) => {
       chai.request(server.app)
         .post('/signin')
-        .send(mock.user) // todo (asn): this should be new user, evaluate.
+        .send({ email: 'new@user.com', password: 'newpassword'}) // todo (asn): this should be new user, evaluate.
         .end((err, res) => {
           res.should.have.status(200);
           res.should.be.json;
