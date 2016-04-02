@@ -23,8 +23,13 @@ const localLogin = new LocalStrategy(localOptions, (email, password, done) => {
   });
 });
 
+const fromHeader = ExtractJwt.fromHeader('authorization');
+const fromQueryParam = ExtractJwt.fromUrlQueryParameter('authorization');
+
 const jwtOptions = {
-  jwtFromRequest: ExtractJwt.fromHeader('authorization'),
+  jwtFromRequest: (req) => {
+    return (fromHeader(req) || fromQueryParam(req));
+  },
   secretOrKey: secret
 };
 

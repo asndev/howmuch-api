@@ -12,7 +12,7 @@ const requireSignin = passport.authenticate('local', { session: false });
 const router = (app) => {
   // dummy router, to be deleted
   app.get('/', requireAuth, (req, res) => {
-    res.send({ success: true });
+    res.send({ success: true, user: req.user });
   });
 
   // signin middleware transforms email+password into user
