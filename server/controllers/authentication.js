@@ -1,11 +1,17 @@
 const jwt = require('jwt-simple');
+const moment = require('moment');
 const { secret } = require('../../config');
 
 const User = require('../models/User');
 
 const generateToken = (user) => {
   const timestamp = new Date().getTime();
-  return jwt.encode({ sub: user.id, iat: timestamp }, secret);
+  const expires = moment().add('days', 1).valueOf();
+  return jwt.encode({
+    sub: user.id,
+    iat: timestamp,
+    exp: expires
+  }, secret);
 };
 
 const signup = (req, res, next) => {

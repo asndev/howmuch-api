@@ -34,7 +34,8 @@ const router = (app) => {
   app.use((err, req, res, next) => {
     res.status(500).json({
       success: false,
-      message: 'Something went terribly wrong'
+      message: 'Something went terribly wrong',
+      err: err
     });
   });
 }

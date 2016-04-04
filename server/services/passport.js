@@ -34,6 +34,9 @@ const jwtOptions = {
 };
 
 const jwtLogin = new Strategy(jwtOptions, (payload, done) => {
+  if (payload.exp <= Date.now()) {
+    return done({ error: 'token has expired' }, false);
+  }
   // jwt subject contains our user id
   User.findOne(payload.sub, (err, user) => {
     if (err) { return done(err, false); }
