@@ -3,17 +3,12 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const should = chai.should();
-
-const server = require('../server/server');
-const User = require('../server/models/User');
-
-server.start({ env: 'test', port: 3123 });
-
-chai.use(chaiHttp);
+const mongoose = require('mongoose');
 
 describe('Routes', function() {
 
-  User.collection.drop();
+  const server = require('../server/server');
+  const User = require('../server/models/User');
 
   const mock = {
     user: {
@@ -21,6 +16,18 @@ describe('Routes', function() {
       password: 'testpassword'
     }
   };
+
+  before((done) => {
+    console.log('Before Server Test');
+
+    console.log('Starting Server for Server Test');
+    server.start({ env: 'test', port: 3123 });
+    chai.use(chaiHttp);
+
+    User.collection.drop(() => {
+      done();
+    });
+  });
 
   beforeEach((done) => {
     const user = new User(mock.user);
@@ -32,8 +39,11 @@ describe('Routes', function() {
 
   // We only drop the users collection after all tests!
   after((done) => {
-    User.collection.drop();
-    done();
+    console.log('After Server Test');
+    User.collection.drop(() => {
+      mongoose.connection.close();
+      done();
+    });
   });
 
   it('should correctly get unauthorized on / GET', (done) => {

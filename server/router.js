@@ -1,6 +1,7 @@
 const passport = require('passport');
 
 const AuthenticationCtrl = require('./controllers/authentication');
+const CoffeeRouter = require('./config/coffee.routes');
 
 // Setup passport strategies
 require('./services/passport');
@@ -8,6 +9,8 @@ require('./services/passport');
 // Middleware
 const requireAuth = passport.authenticate('jwt', { session: false });
 const requireSignin = passport.authenticate('local', { session: false });
+
+const currentVersion = '/v1';
 
 const router = (app) => {
   // dummy router, to be deleted
@@ -22,6 +25,9 @@ const router = (app) => {
   // signup passes email+password to controller
   // and returns token
   app.post('/signup', AuthenticationCtrl.signup);
+
+  // coffee TODO transform into :entity
+  app.use(currentVersion + '/coffee', requireAuth, CoffeeRouter);
 
   // Handle 404
   app.use((req, res, next) => {

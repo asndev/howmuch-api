@@ -30,6 +30,8 @@ const start = (options) => {
   }
 
   mongoose.connect(config[env].dbUrl);
+  mongoose.connection.on('error', console.log);
+  mongoose.connection.on('disconnect', console.log);
 
   const server = http.createServer(app);
   server.listen(port);

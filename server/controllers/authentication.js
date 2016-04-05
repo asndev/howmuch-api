@@ -6,7 +6,7 @@ const User = require('../models/User');
 
 const generateToken = (user) => {
   const timestamp = new Date().getTime();
-  const expires = moment().add('days', 1).valueOf();
+  const expires = moment().add(1, 'days').valueOf();
   return jwt.encode({
     sub: user.id,
     iat: timestamp,
