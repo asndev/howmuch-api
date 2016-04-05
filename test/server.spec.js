@@ -21,7 +21,7 @@ describe('Routes', function() {
     console.log('Before Server Test');
 
     console.log('Starting Server for Server Test');
-    server.start({ env: 'test', port: 3123 });
+    server.start({ env: 'test', port: 3124 });
     chai.use(chaiHttp);
 
     User.collection.drop(() => {
