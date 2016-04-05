@@ -1,7 +1,7 @@
 const passport = require('passport');
 
 const AuthenticationCtrl = require('./controllers/authentication');
-const CoffeeRouter = require('./config/coffee.routes');
+const ActivityListRouter = require('./config/activitylist.routes');
 
 // Setup passport strategies
 require('./services/passport');
@@ -26,8 +26,7 @@ const router = (app) => {
   // and returns token
   app.post('/signup', AuthenticationCtrl.signup);
 
-  // coffee TODO transform into :entity
-  app.use(currentVersion + '/coffee', requireAuth, CoffeeRouter);
+  app.use(currentVersion + '/activitylist', requireAuth, ActivityListRouter);
 
   // Handle 404
   app.use((req, res, next) => {
