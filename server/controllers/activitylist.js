@@ -53,7 +53,7 @@ const update = (req, res, next) => {
 };
 
 const remove = (req, res, next) => {
-  ActivityList.findOneAndRemove({ _id: req.params.id }, (err) => {
+  ActivityList.findOneAndRemove(req.params.id, (err) => {
     if (err) { return next(err); }
     res.json({
       success: true

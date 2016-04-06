@@ -2,6 +2,7 @@ const passport = require('passport');
 
 const AuthenticationCtrl = require('./controllers/authentication');
 const ActivityListRouter = require('./config/activitylist.routes');
+const ActivityRouter = require('./config/activity.routes');
 
 // Setup passport strategies
 require('./services/passport');
@@ -27,6 +28,7 @@ const router = (app) => {
   app.post('/signup', AuthenticationCtrl.signup);
 
   app.use(currentVersion + '/activitylist', requireAuth, ActivityListRouter);
+  app.use(currentVersion + '/activitylist', requireAuth, ActivityRouter);
 
   // Handle 404
   app.use((req, res, next) => {

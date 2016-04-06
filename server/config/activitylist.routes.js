@@ -1,5 +1,5 @@
 const express = require('express');
-const ActivityListCtrl = require('../controllers/activitylist.js');
+const ActivityListCtrl = require('../controllers/activitylist');
 const router = express.Router();
 
 router
