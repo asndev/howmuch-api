@@ -56,9 +56,48 @@ describe('Activity List Routes', function() {
 
   describe('Expect OK Status', () => {
 
-    it('should receive ok status on /v1/activitylist GET', (done) => {
+    let id;
+
+    beforeEach((done) => {
+      id = 42;
+      done();
+    });
+
+    it('should receive ok status on /v1/activitylist/:id POST', (done) => {
       chai.request(server.app)
-      .get('/v1/activitylist')
+      .post('/v1/activitylist/' + id)
+      .send({})
+      .set('authorization', token)
+      .end((err, res) => {
+        res.should.have.status(200);
+        done();
+      });
+    });
+
+    it('should receive ok status on /v1/activitylist/:id GET', (done) => {
+      chai.request(server.app)
+      .get('/v1/activitylist/' + id)
+      .set('authorization', token)
+      .end((err, res) => {
+        res.should.have.status(200);
+        done();
+      });
+    });
+
+    it('should receive ok status on /v1/activitylist/:id PUT', (done) => {
+      chai.request(server.app)
+      .put('/v1/activitylist/' + id)
+      .send({})
+      .set('authorization', token)
+      .end((err, res) => {
+        res.should.have.status(200);
+        done();
+      });
+    });
+
+    it('should receive ok status on /v1/activitylist/:id DELETE', (done) => {
+      chai.request(server.app)
+      .delete('/v1/activitylist/' + id)
       .set('authorization', token)
       .end((err, res) => {
         res.should.have.status(200);

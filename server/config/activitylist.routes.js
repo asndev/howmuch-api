@@ -13,6 +13,9 @@ router
   .post('/:id', (req, res) => {
     res.send('post with id: ' + req.params.id);
   })
+  .put('/:id', (req, res) => {
+    res.send('put with id: ' + req.params.id);
+  })
   .delete('/:id', (req, res) => {
     res.send(' delete with id: ' + req.params.id);
   });
