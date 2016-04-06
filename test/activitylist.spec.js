@@ -10,6 +10,7 @@ describe('Activity List Routes', function() {
 
   const server = require('../server/server');
   const User = require('../server/models/User');
+  const ActivityList = require('../server/models/ActivityList');
 
   let token;
 
@@ -31,6 +32,14 @@ describe('Activity List Routes', function() {
       done();
     });
   });
+
+  after((done) => {
+    User.collection.drop(() => {
+      ActivityList.collection.drop(() => {
+        done();
+      });
+    });
+  })
 
   beforeEach((done) => {
     new User(mock.user).save((err, newUser) => {
@@ -59,19 +68,46 @@ describe('Activity List Routes', function() {
     let id;
 
     beforeEach((done) => {
-      id = 42;
       done();
     });
 
-    it('should receive ok status on /v1/activitylist/:id POST', (done) => {
+    it('should receive ok status on /v1/activitylist POST', (done) => {
       chai.request(server.app)
-      .post('/v1/activitylist/' + id)
-      .send({})
+      .post('/v1/activitylist/')
       .set('authorization', token)
+      .send({ name: 'New Test List' })
       .end((err, res) => {
         res.should.have.status(200);
+        res.body.should.have.property('success');
+        res.body.success.should.be.true;
+        res.body.should.have.property('data');
+        res.body.data.should.be.an('object');
+        res.body.data.should.have.property('_id');
+        res.body.data.should.have.property('name');
+        res.body.data.should.have.property('_creator');
+        res.body.data._id.should.be.a('string');
+        res.body.data.name.should.be.a('string');
+        res.body.data._creator.should.be.a('string');
+        id = res.body.data._id;
         done();
       });
+    });
+
+    it('should receive ok status on /v1/activitylist GET', (done) => {
+      chai.request(server.app)
+        .get('/v1/activitylist')
+        .set('authorization', token)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.have.property('data');
+          res.body.data.should.be.an('array');
+          res.body.data[0].should.be.an('object');
+          res.body.data[0].should.have.property('_id');
+          res.body.data[0].should.have.property('_creator');
+          res.body.data[0].should.have.property('name');
+          res.body.data[0].name.should.equal('New Test List');
+          done();
+        });
     });
 
     it('should receive ok status on /v1/activitylist/:id GET', (done) => {
@@ -80,6 +116,15 @@ describe('Activity List Routes', function() {
       .set('authorization', token)
       .end((err, res) => {
         res.should.have.status(200);
+        res.body.should.have.property('success');
+        res.body.success.should.be.true;
+        res.body.should.have.property('data');
+        res.body.data.should.be.an('object');
+        res.body.data.should.have.property('_id');
+        res.body.data.should.have.property('_creator');
+        res.body.data.should.have.property('name');
+        res.body.data._id.should.equal(id);
+        res.body.data.name.should.equal('New Test List');
         done();
       });
     });
@@ -87,10 +132,19 @@ describe('Activity List Routes', function() {
     it('should receive ok status on /v1/activitylist/:id PUT', (done) => {
       chai.request(server.app)
       .put('/v1/activitylist/' + id)
-      .send({})
+      .send({ name: 'New Name' })
       .set('authorization', token)
       .end((err, res) => {
         res.should.have.status(200);
+        res.body.should.have.property('success');
+        res.body.success.should.be.true;
+        res.body.should.have.property('data');
+        res.body.data.should.be.an('object');
+        res.body.data.should.have.property('_id');
+        res.body.data.should.have.property('_creator');
+        res.body.data.should.have.property('name');
+        res.body.data._id.should.equal(id);
+        res.body.data.name.should.equal('New Name');
         done();
       });
     });
@@ -101,7 +155,14 @@ describe('Activity List Routes', function() {
       .set('authorization', token)
       .end((err, res) => {
         res.should.have.status(200);
-        done();
+        chai.request(server.app)
+          .get('/v1/activitylist')
+          .set('authorization', token)
+          .end((err, res) => {
+            res.should.have.status(200);
+            res.body.data.length.should.equal(0);
+            done();
+          });
       });
     });
 

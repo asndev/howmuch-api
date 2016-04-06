@@ -1,23 +1,14 @@
 const express = require('express');
+const ActivityListCtrl = require('../controllers/activitylist.js');
 const router = express.Router();
 
 router
-  .get('/', (req, res) => {
-    res.send('get /');
-  });
+  .get('/', ActivityListCtrl.findAll)
+  .post('/', ActivityListCtrl.create);
 
 router
-  .get('/:id', (req, res) => {
-    res.send('get with id: ' + req.params.id);
-  })
-  .post('/:id', (req, res) => {
-    res.send('post with id: ' + req.params.id);
-  })
-  .put('/:id', (req, res) => {
-    res.send('put with id: ' + req.params.id);
-  })
-  .delete('/:id', (req, res) => {
-    res.send(' delete with id: ' + req.params.id);
-  });
+  .get('/:id', ActivityListCtrl.findOne)
+  .put('/:id', ActivityListCtrl.update)
+  .delete('/:id', ActivityListCtrl.remove);
 
 module.exports = router;

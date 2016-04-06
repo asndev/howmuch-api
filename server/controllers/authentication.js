@@ -20,13 +20,14 @@ const signup = (req, res, next) => {
   if (!email || !password) {
     return res
       .status(422)
-      .send({ error: '`email` and `password` are mandatory.' });
+      .send({ success: false, error: '`email` and `password` are mandatory.' });
   }
 
   User.findOne({ email }, (err, existing) => {
     if (err) { return next(err); }
     if (existing) {
-      return res.status(422).send({ error: '`email` already registered.' });
+      return res.status(422)
+        .send({ success: false,  error: '`email` already registered.' });
     }
 
     const user = new User({ email, password });
@@ -39,9 +40,12 @@ const signup = (req, res, next) => {
 };
 
 const signin = (req, res, next) => {
-  if (!req.user) { res.status(422).send({ error: 'No user available' }); }
+  if (!req.user) {
+    res.status(422)
+      .send({ success: false, error: 'No user available' });
+  }
   // user was extracted via signin middleware
-  res.send({ token: generateToken(req.user) });
+  res.send({ success: true, token: generateToken(req.user) });
 };
 
 exports.signin = signin;
