@@ -6,7 +6,12 @@ const config = {
   },
   test: {
     dbUrl: 'mongodb://localhost/howmuch-test'
+  },
+  prod: {
+    dbUrl: process.env.DB_URL // Heroku Config Var
   }
 };
+
+
 
 module.exports = config;

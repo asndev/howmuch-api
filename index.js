@@ -2,4 +2,5 @@ const server = require('./server/server');
 
 // Server
 const port = process.env.PORT || 3030;
-server.start({ env: 'dev', port });
+const env = process.env.NODE_ENV || 'dev';
+server.start({ env, port });
