@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node --harmony_destructuring index.js",
     "dev": "nodemon --harmony_destructuring index.js",
-    "test": "./node_modules/mocha/bin/mocha --harmony_destructuring test"
+    "test": "./node_modules/mocha/bin/mocha --harmoony --harmony_destructuring test"
   },
   "author": "",
   "license": "ISC",
