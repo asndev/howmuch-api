@@ -12,6 +12,7 @@ const findAll = (req, res, next) => {
       if (err) { return next(err); }
 
       let result = {};
+
       activities.forEach(e => {
         let y = moment(e.timestamp).year();
         let m = moment(e.timestamp).month() + 1;
@@ -31,8 +32,26 @@ const findAll = (req, res, next) => {
         result[top].data[d].count++;
       });
 
+      // Just count all 'day' properties of the resulting json.
+      // TODO all this has to be done via mongodb aggregator
+      const days = Object
+        .keys(result)
+        .map(key => {
+          return Object.keys(result[key].data).length;
+        })
+        .reduce((prev, curr) => { return prev + curr}, 0);
+
+      const activityCount = activities.length;
+      const averagePerDay = activityCount / days;
+
+      const details = {
+        activityCount,
+        averagePerDay
+      };
+
       res.json({
         success: true,
+        details: details,
         data: result
       });
     });
