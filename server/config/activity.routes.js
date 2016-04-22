@@ -4,6 +4,7 @@ const router = express.Router();
 
 router
   .get('/:listId/activity', ActivityCtrl.findAll)
+  .get('/:listId/activty/plain', ActivityListCtrl.findPlain)
   .post('/:listId/activity', ActivityCtrl.create);
 
 router
