@@ -4,6 +4,7 @@ const router = express.Router();
 
 router
   .get('/', ActivityListCtrl.findAll)
+  .get('/plain', ActivityListCtrl.findPlain)
   .post('/', ActivityListCtrl.create);
 
 router

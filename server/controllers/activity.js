@@ -2,17 +2,17 @@
 const moment = require('moment');
 const Activity = require('../models/Activity');
 
-const findAll = (req, res, next) => {
-  if (req.params.plain) {
-    return Activity.find(req.params.listId, (err, activities) => {
-      if (err) { return next(err); }
-      res.json({
-        success: true,
-        data: activities
-      })
-    });
-  }
+const findPlain = (req, res, next) => {
+  return Activity.find(req.params.listId, (err, activities) => {
+    if (err) { return next(err); }
+    res.json({
+      success: true,
+      data: activities
+    })
+  });
+}
 
+const findAll = (req, res, next) => {
   return Activity
     .find({
       _activityListId: req.params.listId
@@ -110,6 +110,7 @@ const remove = (req, res, next) => {
   });
 };
 
+exports.findPlain = findPlain;
 exports.findAll = findAll;
 exports.findOne = findOne;
 exports.create = create;
