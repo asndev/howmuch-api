@@ -3,7 +3,17 @@ const moment = require('moment');
 const Activity = require('../models/Activity');
 
 const findAll = (req, res, next) => {
-  Activity
+  if (req.params.plain) {
+    return Activity.find(req.params.listId, (err, activities) => {
+      if (err) { return next(err); }
+      res.json({
+        success: true,
+        data: activities
+      })
+    });
+  }
+
+  return Activity
     .find({
       _activityListId: req.params.listId
     })
