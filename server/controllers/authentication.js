@@ -34,7 +34,10 @@ const signup = (req, res, next) => {
 
     user.save((err) => {
       if (err) { return next(err); }
-      res.json({ token: generateToken(user) });
+      res.json({
+        token: generateToken(user),
+        user
+      });
     });
   });
 };
@@ -45,7 +48,7 @@ const signin = (req, res, next) => {
       .send({ success: false, error: 'No user available' });
   }
   // user was extracted via signin middleware
-  res.send({ success: true, token: generateToken(req.user) });
+  res.send({ success: true, token: generateToken(req.user), user: req.user.email });
 };
 
 exports.signin = signin;
