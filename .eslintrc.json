@@ -1,0 +1,14 @@
+{
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module"
+  },
+  "extends": [
+    "google"
+  ],
+  "rules": {
+    "object-curly-spacing": 0,
+    "comma-dangle": 0,
+    "brace-style": 0
+  }
+}

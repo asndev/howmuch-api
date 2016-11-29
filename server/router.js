@@ -45,6 +45,6 @@ const router = (app) => {
       err: err
     });
   });
-}
+};
 
 module.exports = router;

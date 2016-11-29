@@ -27,7 +27,7 @@ const signup = (req, res, next) => {
     if (err) { return next(err); }
     if (existing) {
       return res.status(422)
-        .send({ success: false,  error: '`email` already registered.' });
+        .send({ success: false, error: '`email` already registered.' });
     }
 
     const user = new User({ email, password });
@@ -48,7 +48,11 @@ const signin = (req, res, next) => {
       .send({ success: false, error: 'No user available' });
   }
   // user was extracted via signin middleware
-  res.send({ success: true, token: generateToken(req.user), user: req.user.email });
+  res.send({
+    success: true,
+    token: generateToken(req.user),
+    user: req.user.email
+  });
 };
 
 exports.signin = signin;

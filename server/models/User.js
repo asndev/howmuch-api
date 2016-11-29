@@ -10,7 +10,7 @@ const schema = new Schema({
 });
 
 schema.pre('save', function(next) {
-  const user = this;
+  const user = this; // eslint-disable-line
 
   bcrypt.genSalt(10, (err, salt) => {
     if (err) { next(err); }
@@ -30,6 +30,6 @@ schema.methods.checkPassword = function(givenPassword, callback) {
     if (err) { return callback(err); }
     callback(null, isMatch);
   });
-}
+};
 
 module.exports = mongoose.model('user', schema);

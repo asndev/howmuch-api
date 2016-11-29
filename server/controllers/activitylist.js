@@ -59,7 +59,7 @@ const remove = (req, res, next) => {
       success: true
     });
   });
-}
+};
 
 exports.create = create;
 exports.findAll = findAll;

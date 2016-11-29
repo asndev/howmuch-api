@@ -1,6 +1,6 @@
 const express = require('express');
 const ActivityCtrl = require('../controllers/activity');
-const router = express.Router();
+const router = express.Router(); // eslint-disable-line
 
 router
   .get('/:listId/activity', ActivityCtrl.findAll)

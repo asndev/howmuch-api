@@ -8,9 +8,9 @@ const findPlain = (req, res, next) => {
     res.json({
       success: true,
       data: activities
-    })
+    });
   });
-}
+};
 
 const findAll = (req, res, next) => {
   return Activity
@@ -23,18 +23,18 @@ const findAll = (req, res, next) => {
 
       let result = {};
 
-      activities.forEach(e => {
+      activities.forEach((e) => {
         let y = moment(e.timestamp).year();
         let m = moment(e.timestamp).month() + 1;
         let d = moment(e.timestamp).format('l');
         let top = y + '-' + m;
 
         if (!result[top]) {
-          result[top] = { count: 0, data: {} }
+          result[top] = { count: 0, data: {} };
         }
 
         if (!result[top].data[d]) {
-          result[top].data[d] = { count: 0, data: [] }
+          result[top].data[d] = { count: 0, data: [] };
         }
 
         result[top].count++;
@@ -46,10 +46,10 @@ const findAll = (req, res, next) => {
       // TODO all this has to be done via mongodb aggregator
       const days = Object
         .keys(result)
-        .map(key => {
+        .map((key) => {
           return Object.keys(result[key].data).length;
         })
-        .reduce((prev, curr) => { return prev + curr}, 0);
+        .reduce((prev, curr) => { return prev + curr; }, 0);
 
       const activityCount = activities.length;
       const averagePerDay = activityCount / days;
@@ -73,7 +73,7 @@ const findOne = (req, res, next) => {
     res.json({
       success: true,
       data: activity
-    })
+    });
   });
 };
 
